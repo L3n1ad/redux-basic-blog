@@ -36,8 +36,19 @@ export const fetchPostsAndUsers = () => async (dispatch, getState) => {
 
   // Using loadish we mapping through the posts as a second argument we passing in userId so thanks to loadish we will get back all the user ids for every single posts
   // after that we call loadish uniq which will return an array on uniq ids
-  const userIds = _.uniq(_.map(getState().posts, "userId"));
-  userIds.forEach((id) => dispatch(fetchUser(id)));
+
+  // const userIds = _.uniq(_.map(getState().posts, "userId"));
+  // userIds.forEach((id) => dispatch(fetchUser(id)));
+
+  // REFACTORED VERSION WITH LOADASH
+  // it chains all the methods together and user the return from the previous one to make the next one
+  //  .value() needed at the end
+
+  _.chain(getState().posts)
+    .map("userId")
+    .uniq()
+    .forEach((id) => dispatch(fetchUser(id)))
+    .value();
 };
 
 // call await with forEach
