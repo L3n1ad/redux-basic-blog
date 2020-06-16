@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchPosts } from "../actions";
+import { fetchPostsAndUsers } from "../actions";
 import UserHeader from "./UserHeader";
 
-const PostList = ({ fetchPosts, posts }) => {
+const PostList = ({ fetchPostsAndUsers, posts }) => {
   useEffect(() => {
-    fetchPosts();
+    fetchPostsAndUsers();
   }, []);
 
   function renderList() {
@@ -33,4 +33,6 @@ const mapStateToProps = (state) => {
 };
 
 // even if we don't have a state we need pass in something as a first argument for connect
-export default connect(mapStateToProps, { fetchPosts: fetchPosts })(PostList);
+export default connect(mapStateToProps, {
+  fetchPostsAndUsers: fetchPostsAndUsers,
+})(PostList);
